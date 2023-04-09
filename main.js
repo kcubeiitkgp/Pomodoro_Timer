@@ -33,7 +33,7 @@ function displayTimeLeft(seconds) {
 }
 
 function playSound() {
-  const sound = new Audio('sound.ogg');
+  const sound = new Audio('sound.mp3');
   sound.play();
 }
 
