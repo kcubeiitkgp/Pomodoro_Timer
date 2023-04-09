@@ -16,6 +16,7 @@ function timer(seconds) {
 
     if (secondsLeft < 0) {
       clearInterval(countdown);
+      playSound();
       return;
     }
 
@@ -31,6 +32,11 @@ function displayTimeLeft(seconds) {
   document.title = display;
 }
 
+function playSound() {
+  const sound = new Audio('sound.ogg');
+  sound.play();
+}
+
 startButton.addEventListener("click", () => {
   timer(25 * 60);
 });
@@ -40,3 +46,4 @@ resetButton.addEventListener("click", () => {
   timeLeft.textContent = "25:00";
   document.title = "Pomodoro Timer";
 });
+
