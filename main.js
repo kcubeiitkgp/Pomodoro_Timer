@@ -1,8 +1,10 @@
 const startButton = document.querySelector(".start-button");
 const resetButton = document.querySelector(".reset-button");
 const timeLeft = document.querySelector(".time-left");
+const timerContainer = document.querySelector(".timer-container");
 
 let countdown;
+let isBreak = false;
 
 function timer(seconds) {
   clearInterval(countdown);
@@ -17,6 +19,15 @@ function timer(seconds) {
     if (secondsLeft < 0) {
       clearInterval(countdown);
       playSound();
+      if (isBreak) {
+        isBreak = false;
+        timer(25 * 60);
+      } else {
+        isBreak = true;
+        timer(5 * 60);
+        timerContainer.classList.add("is-break-time");
+        timeLeft.textContent = "Take a break!";
+      }
       return;
     }
 
@@ -55,6 +66,8 @@ if (startButton && resetButton && timeLeft) {
     clearInterval(countdown);
     timeLeft.textContent = "25:00";
     document.title = "Pomodoro Timer";
+    timerContainer.classList.remove("is-break-time");
+    isBreak = false;
   });
 } else {
   console.error('One or more required elements not found.');
