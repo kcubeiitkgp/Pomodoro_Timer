@@ -1,82 +1,65 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
+  background: linear-gradient(to bottom right, #fca311, #ffba08);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 .timer-container {
-  text-align: center;
-  margin-top: 50px;
-  transition: background-color 1s ease-in-out;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  border-radius: 10px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
 }
 
 .timer {
-  display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 .time-left {
-  font-size: 100px;
-  margin-right: 20px;
-  color: #333;
+  font-size: 5rem;
+  font-weight: bold;
 }
 
 .start-button,
-.reset-button {
-  font-size: 24px;
-  padding: 10px;
-  margin-left: 20px;
-  background-color: #4caf50;
+.reset-button,
+.skip-button {
+  background-color: white;
   border: none;
   border-radius: 4px;
-  color: #fff;
+  color: #fca311;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  font-size: 1.5rem;
+  margin: 10px;
+  padding: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .start-button:hover,
-.reset-button:hover {
-  background-color: #3e8e41;
+.reset-button:hover,
+.skip-button:hover {
+  background-color: #fca311;
+  color: white;
 }
 
-.start-button:focus,
-.reset-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px #4caf50;
+.is-break-time {
+  background-color: #06d6a0;
 }
 
-.timer-container.is-timer-running {
-  background-color: #ffd600;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+.is-break-time .start-button {
+  background-color: white;
+  color: #06d6a0;
 }
 
-.timer-container.is-break-time {
-  background-color: #03a9f4;
+.is-break-time .start-button:hover {
+  background-color: #06d6a0;
+  color: white;
 }
 
-.timer-container.is-break-time .time-left {
-  color: #fff;
-}
-
-.timer-container.is-break-time .start-button,
-.timer-container.is-break-time .reset-button {
-  background-color: #fff;
-  color: #03a9f4;
-  border: 2px solid #03a9f4;
-}
-
-.timer-container.is-break-time .start-button:hover,
-.timer-container.is-break-time .reset-button:hover {
-  background-color: #03a9f4;
-  color: #fff;
-}
-
-.timer-container.is-break-time .start-button:focus,
-.timer-container.is-break-time .reset-button:focus {
-  box-shadow: 0 0 0 4px #03a9f4;
+.is-break-time .time-left {
+  color: white;
 }
