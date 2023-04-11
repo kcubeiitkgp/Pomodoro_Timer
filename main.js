@@ -7,7 +7,6 @@ const sound = new Audio("sound.mp3");
 
 let countdown;
 let isBreak = false;
-let isPaused = false;
 let remainingTime;
 
 function timer(seconds) {
@@ -42,6 +41,7 @@ function timer(seconds) {
         sound.play();
         startButton.textContent = "Start";
       }
+      resetButton.textContent = "Reset";
       return;
     }
 
@@ -59,34 +59,31 @@ function displayTimeLeft(seconds) {
 
 
 function pomodoro() {
-  if (isPaused) {
-    togglePause();
+  if (isBreak) {
+    isBreak = false;
+    timeLeft.textContent = "25:00";
+    document.title = "Pomodoro Timer";
+    timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
+    startButton.textContent = "Start";
   } else {
-    if (isBreak) {
-      isBreak = false;
-      timeLeft.textContent = "25:00";
-      document.title = "Pomodoro Timer";
-      timerContainer.classList.remove("is-break-time");
-      skipButton.style.display = "none";
-      startButton.textContent = "Start";
-    } else {
-      timer(25 * 60);
-      timerContainer.classList.remove("is-break-time");
-      skipButton.style.display = "none";
-      startButton.textContent = "Pause";
-    }
+    timer(25 * 60);
+    timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
+    startButton.textContent = "Pause";
   }
+  resetButton.textContent = "Reset";
 }
 
 function reset() {
   clearInterval(countdown);
   isBreak = false;
-  isPaused = false;
   timeLeft.textContent = "25:00";
   document.title = "Pomodoro Timer";
   timerContainer.classList.remove("is-break-time");
   skipButton.style.display = "none";
   startButton.textContent = "Start";
+  resetButton.textContent = "Start";
 }
 
 function skipBreak() {
@@ -101,29 +98,10 @@ function skipBreak() {
 }
 
 if (startButton && resetButton && skipButton && timeLeft && timerContainer && sound) {
-  startButton.addEventListener("click", () => {
-    if (isPaused) {
-      togglePause();
-    } else {if (isBreak) {
-    isBreak = false;
-    timeLeft.textContent = "25:00";
-    document.title = "Pomodoro Timer";
-    timerContainer.classList.remove("is-break-time");
-    skipButton.style.display = "none";
-    startButton.textContent = "Start";
-  } else {
-    timer(25 * 60);
-    timerContainer.classList.remove("is-break-time");
-    skipButton.style.display = "none";
-    startButton.textContent = "Pause";
-  }
-}});
-
-resetButton.addEventListener("click", reset);
-
-skipButton.addEventListener("click", skipBreak);
+  startButton.addEventListener("click", pomodoro);
+  resetButton.addEventListener("click", reset);
+  skipButton.addEventListener("click", skipBreak);
 } else {
-console.error('One or more required elements not found.');
-alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
+  console.error('One or more required elements not found.');
+  alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
 }
-     
