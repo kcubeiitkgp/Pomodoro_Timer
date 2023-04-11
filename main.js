@@ -27,11 +27,13 @@ function timer(seconds) {
         timeLeft.textContent = "25:00";
         document.title = "Pomodoro Timer";
         timerContainer.classList.remove("is-break-time");
+        skipButton.style.display = "none";
       } else {
         isBreak = true;
         timeLeft.textContent = "5:00";
         document.title = "Break Time!";
         timerContainer.classList.add("is-break-time");
+        skipButton.style.display = "block";
         sound.currentTime = 0;
         sound.play();
       }
@@ -53,6 +55,7 @@ function displayTimeLeft(seconds) {
 function pomodoro() {
   timer(25 * 60);
   timerContainer.classList.remove("is-break-time");
+  skipButton.style.display = "none";
 }
 
 function skipBreak() {
@@ -62,6 +65,7 @@ function skipBreak() {
     timeLeft.textContent = "25:00";
     document.title = "Pomodoro Timer";
     timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
   }
 }
 
@@ -74,6 +78,7 @@ if (startButton && resetButton && skipButton && timeLeft && timerContainer && so
     timeLeft.textContent = "25:00";
     document.title = "Pomodoro Timer";
     timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
   });
 
   skipButton.addEventListener("click", skipBreak);
