@@ -7,12 +7,15 @@ const sound = new Audio("sound.mp3");
 
 let countdown;
 let isBreak = false;
+let isPaused = false;
+let remainingTime;
 
 function timer(seconds) {
   clearInterval(countdown);
 
   const now = Date.now();
   const then = now + seconds * 1000;
+  remainingTime = seconds;
   displayTimeLeft(seconds);
 
   countdown = setInterval(() => {
@@ -28,6 +31,7 @@ function timer(seconds) {
         document.title = "Pomodoro Timer";
         timerContainer.classList.remove("is-break-time");
         skipButton.style.display = "none";
+        startButton.textContent = "Start";
       } else {
         isBreak = true;
         timeLeft.textContent = "5:00";
@@ -36,6 +40,7 @@ function timer(seconds) {
         skipButton.style.display = "block";
         sound.currentTime = 0;
         sound.play();
+        startButton.textContent = "Resume";
       }
       return;
     }
@@ -52,10 +57,37 @@ function displayTimeLeft(seconds) {
   document.title = display;
 }
 
+function togglePause() {
+  if (isPaused) {
+    startButton.textContent = "Pause";
+    timer(remainingTime);
+  } else {
+    startButton.textContent = "Resume";
+    clearInterval(countdown);
+  }
+  isPaused = !isPaused;
+}
+
 function pomodoro() {
-  timer(25 * 60);
+  if (isPaused) {
+    togglePause();
+  } else {
+    timer(25 * 60);
+    timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
+    startButton.textContent = "Pause";
+  }
+}
+
+function reset() {
+  clearInterval(countdown);
+  isBreak = false;
+  isPaused = false;
+  timeLeft.textContent = "25:00";
+  document.title = "Pomodoro Timer";
   timerContainer.classList.remove("is-break-time");
   skipButton.style.display = "none";
+  startButton.textContent = "Start";
 }
 
 function skipBreak() {
@@ -66,20 +98,14 @@ function skipBreak() {
     document.title = "Pomodoro Timer";
     timerContainer.classList.remove("is-break-time");
     skipButton.style.display = "none";
+    startButton.textContent = "Start";
   }
 }
 
 if (startButton && resetButton && skipButton && timeLeft && timerContainer && sound) {
   startButton.addEventListener("click", pomodoro);
 
-  resetButton.addEventListener("click", () => {
-    clearInterval(countdown);
-    isBreak = false;
-    timeLeft.textContent = "25:00";
-    document.title = "Pomodoro Timer";
-    timerContainer.classList.remove("is-break-time");
-    skipButton.style.display = "none";
-  });
+  resetButton.addEventListener("click", reset);
 
   skipButton.addEventListener("click", skipBreak);
 } else {
