@@ -111,7 +111,23 @@ function skipBreak() {
 }
 
 if (startButton && resetButton && skipButton && timeLeft && timerContainer && sound) {
-startButton.addEventListener("click", pomodoro);
+  startButton.addEventListener("click", () => {
+    if (isPaused) {
+      togglePause();
+    } else {if (isBreak) {
+    isBreak = false;
+    timeLeft.textContent = "25:00";
+    document.title = "Pomodoro Timer";
+    timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
+    startButton.textContent = "Start";
+  } else {
+    timer(25 * 60);
+    timerContainer.classList.remove("is-break-time");
+    skipButton.style.display = "none";
+    startButton.textContent = "Pause";
+  }
+}});
 
 resetButton.addEventListener("click", reset);
 
@@ -120,3 +136,4 @@ skipButton.addEventListener("click", skipBreak);
 console.error('One or more required elements not found.');
 alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
 }
+     
