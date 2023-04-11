@@ -1,7 +1,9 @@
 const startButton = document.querySelector(".start-button");
 const resetButton = document.querySelector(".reset-button");
+const skipButton = document.querySelector(".skip-button");
 const timeLeft = document.querySelector(".time-left");
 const timerContainer = document.querySelector(".timer-container");
+const sound = new Audio("sound.mp3");
 
 let countdown;
 let isBreak = false;
@@ -18,15 +20,20 @@ function timer(seconds) {
 
     if (secondsLeft < 0) {
       clearInterval(countdown);
-      playSound();
+      sound.currentTime = 0;
+      sound.play();
       if (isBreak) {
         isBreak = false;
-        timer(25 * 60);
+        timeLeft.textContent = "25:00";
+        document.title = "Pomodoro Timer";
+        timerContainer.classList.remove("is-break-time");
       } else {
         isBreak = true;
-        timer(5 * 60);
+        timeLeft.textContent = "5:00";
+        document.title = "Break Time!";
         timerContainer.classList.add("is-break-time");
-        timeLeft.textContent = "Take a break!";
+        sound.currentTime = 0;
+        sound.play();
       }
       return;
     }
@@ -43,32 +50,33 @@ function displayTimeLeft(seconds) {
   document.title = display;
 }
 
-function playSound() {
-  const sound = new Audio('sound.mp3');
-  if (sound.canPlayType('audio/mpeg')) {
-    sound.play()
-      .catch(error => {
-        console.error('Error playing sound:', error);
-        alert('There was an issue playing the sound. Please check your audio settings.');
-      });
-  } else {
-    console.error('Unsupported audio format: sound.mp3');
-    alert('This browser does not support the audio format of the sound file. Please use a different browser or update your browser settings.');
-  }
+function pomodoro() {
+  timer(25 * 60);
+  timerContainer.classList.remove("is-break-time");
 }
 
-if (startButton && resetButton && timeLeft) {
-  startButton.addEventListener("click", () => {
-    timer(25 * 60);
-  });
-
-  resetButton.addEventListener("click", () => {
+function skipBreak() {
+  if (isBreak) {
     clearInterval(countdown);
+    isBreak = false;
     timeLeft.textContent = "25:00";
     document.title = "Pomodoro Timer";
     timerContainer.classList.remove("is-break-time");
+  }
+}
+
+if (startButton && resetButton && skipButton && timeLeft && timerContainer && sound) {
+  startButton.addEventListener("click", pomodoro);
+
+  resetButton.addEventListener("click", () => {
+    clearInterval(countdown);
     isBreak = false;
+    timeLeft.textContent = "25:00";
+    document.title = "Pomodoro Timer";
+    timerContainer.classList.remove("is-break-time");
   });
+
+  skipButton.addEventListener("click", skipBreak);
 } else {
   console.error('One or more required elements not found.');
   alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
