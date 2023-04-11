@@ -63,3 +63,7 @@ body {
 .is-break-time .time-left {
   color: white;
 }
+
+.skip-button {
+  display: none;
+}
