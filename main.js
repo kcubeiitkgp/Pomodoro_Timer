@@ -68,6 +68,26 @@ function togglePause() {
   isPaused = !isPaused;
 }
 
+startButton.addEventListener("click", () => {
+  if (isPaused) {
+    togglePause();
+  } else {
+    if (isBreak) {
+      isBreak = false;
+      timeLeft.textContent = "25:00";
+      document.title = "Pomodoro Timer";
+      timerContainer.classList.remove("is-break-time");
+      skipButton.style.display = "none";
+      startButton.textContent = "Start";
+    } else {
+      timer(25 * 60);
+      timerContainer.classList.remove("is-break-time");
+      skipButton.style.display = "none";
+      startButton.textContent = "Pause";
+    }
+  }
+});
+
 function pomodoro() {
   if (isPaused) {
     togglePause();
