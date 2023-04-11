@@ -40,7 +40,7 @@ function timer(seconds) {
         skipButton.style.display = "block";
         sound.currentTime = 0;
         sound.play();
-        startButton.textContent = "Resume";
+        startButton.textContent = "Start";
       }
       return;
     }
@@ -72,10 +72,19 @@ function pomodoro() {
   if (isPaused) {
     togglePause();
   } else {
-    timer(25 * 60);
-    timerContainer.classList.remove("is-break-time");
-    skipButton.style.display = "none";
-    startButton.textContent = "Pause";
+    if (isBreak) {
+      isBreak = false;
+      timeLeft.textContent = "25:00";
+      document.title = "Pomodoro Timer";
+      timerContainer.classList.remove("is-break-time");
+      skipButton.style.display = "none";
+      startButton.textContent = "Start";
+    } else {
+      timer(25 * 60);
+      timerContainer.classList.remove("is-break-time");
+      skipButton.style.display = "none";
+      startButton.textContent = "Pause";
+    }
   }
 }
 
@@ -92,7 +101,6 @@ function reset() {
 
 function skipBreak() {
   if (isBreak) {
-    clearInterval(countdown);
     isBreak = false;
     timeLeft.textContent = "25:00";
     document.title = "Pomodoro Timer";
@@ -103,12 +111,12 @@ function skipBreak() {
 }
 
 if (startButton && resetButton && skipButton && timeLeft && timerContainer && sound) {
-  startButton.addEventListener("click", pomodoro);
+startButton.addEventListener("click", pomodoro);
 
-  resetButton.addEventListener("click", reset);
+resetButton.addEventListener("click", reset);
 
-  skipButton.addEventListener("click", skipBreak);
+skipButton.addEventListener("click", skipBreak);
 } else {
-  console.error('One or more required elements not found.');
-  alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
+console.error('One or more required elements not found.');
+alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
 }
