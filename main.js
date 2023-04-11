@@ -34,16 +34,29 @@ function displayTimeLeft(seconds) {
 
 function playSound() {
   const sound = new Audio('sound.mp3');
-  sound.play();
+  if (sound.canPlayType('audio/mpeg')) {
+    sound.play()
+      .catch(error => {
+        console.error('Error playing sound:', error);
+        alert('There was an issue playing the sound. Please check your audio settings.');
+      });
+  } else {
+    console.error('Unsupported audio format: sound.mp3');
+    alert('This browser does not support the audio format of the sound file. Please use a different browser or update your browser settings.');
+  }
 }
 
-startButton.addEventListener("click", () => {
-  timer(25 * 60);
-});
+if (startButton && resetButton && timeLeft) {
+  startButton.addEventListener("click", () => {
+    timer(25 * 60);
+  });
 
-resetButton.addEventListener("click", () => {
-  clearInterval(countdown);
-  timeLeft.textContent = "25:00";
-  document.title = "Pomodoro Timer";
-});
-
+  resetButton.addEventListener("click", () => {
+    clearInterval(countdown);
+    timeLeft.textContent = "25:00";
+    document.title = "Pomodoro Timer";
+  });
+} else {
+  console.error('One or more required elements not found.');
+  alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
+}
