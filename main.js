@@ -1,6 +1,7 @@
 const startButton = document.querySelector(".start-button");
 const timeLeft = document.querySelector(".time-left");
 const timerContainer = document.querySelector(".timer-container");
+const heading = document.querySelector("h1");
 const sound = new Audio("sound.mp3");
 
 let countdown;
@@ -43,11 +44,13 @@ function updateUI() {
   if (isBreak) {
     timeLeft.textContent = "5:00";
     document.title = "Break Time!";
+    heading.textContent = "Break";
     timerContainer.classList.add("is-break-time");
     startButton.textContent = "Start";
   } else {
     timeLeft.textContent = "25:00";
     document.title = "Pomodoro Timer";
+    heading.textContent = "Focus";
     timerContainer.classList.remove("is-break-time");
     startButton.textContent = "Start";
   }
@@ -64,7 +67,7 @@ function startOrReset() {
   }
 }
 
-if (startButton && timeLeft && timerContainer && sound) {
+if (startButton && timeLeft && timerContainer && heading && sound) {
   startButton.addEventListener("click", startOrReset);
 } else {
   console.error('One or more required elements not found.');
