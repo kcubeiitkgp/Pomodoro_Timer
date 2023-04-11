@@ -6,6 +6,7 @@ body {
 .timer-container {
   text-align: center;
   margin-top: 50px;
+  transition: background-color 1s ease-in-out;
 }
 
 .timer {
@@ -18,6 +19,7 @@ body {
 .time-left {
   font-size: 100px;
   margin-right: 20px;
+  color: #333;
 }
 
 .start-button,
@@ -35,4 +37,14 @@ body {
 .start-button:hover,
 .reset-button:hover {
   background-color: #3e8e41;
+}
+
+.start-button:focus,
+.reset-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px #4caf50;
+}
+
+.timer-container.is-timer-running {
+  background-color: #ffd600;
 }
