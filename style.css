@@ -7,6 +7,10 @@ body {
   text-align: center;
   margin-top: 50px;
   transition: background-color 1s ease-in-out;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
 }
 
 .timer {
@@ -32,6 +36,7 @@ body {
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .start-button:hover,
@@ -47,4 +52,31 @@ body {
 
 .timer-container.is-timer-running {
   background-color: #ffd600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.timer-container.is-break-time {
+  background-color: #03a9f4;
+}
+
+.timer-container.is-break-time .time-left {
+  color: #fff;
+}
+
+.timer-container.is-break-time .start-button,
+.timer-container.is-break-time .reset-button {
+  background-color: #fff;
+  color: #03a9f4;
+  border: 2px solid #03a9f4;
+}
+
+.timer-container.is-break-time .start-button:hover,
+.timer-container.is-break-time .reset-button:hover {
+  background-color: #03a9f4;
+  color: #fff;
+}
+
+.timer-container.is-break-time .start-button:focus,
+.timer-container.is-break-time .reset-button:focus {
+  box-shadow: 0 0 0 4px #03a9f4;
 }
