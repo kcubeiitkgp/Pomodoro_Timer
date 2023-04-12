@@ -3,6 +3,8 @@ const timeLeft = document.querySelector(".time-left");
 const timerContainer = document.querySelector(".timer-container");
 const heading = document.querySelector("h1");
 const sound = new Audio("sound.mp3");
+const currentTimeEl = document.querySelector(".current-time");
+const currentDateEl = document.querySelector(".current-date");
 
 let countdown;
 let isBreak = false;
@@ -78,9 +80,36 @@ function startOrReset() {
   }
 }
 
+function getCurrentTime() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const amPm = hours >= 12 ? 'PM' : 'AM';
+  const displayHours = hours % 12 || 12;
+  const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  currentTimeEl.textContent = `${displayHours}:${displayMinutes} ${amPm}`;
+}
+
+function getCurrentDate() {
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  currentDateEl.textContent = now.toLocaleDateString('en-US', options);
+}
+
+function initialize() {
+  getCurrentTime();
+ getCurrentDate();
+setInterval(() => {
+getCurrentTime();
+getCurrentDate();
+}, 1000);
+}
+
+initialize();
+
 if (startButton && timeLeft && timerContainer && heading && sound) {
-  startButton.addEventListener("click", startOrReset);
+startButton.addEventListener("click", startOrReset);
 } else {
-  console.error('One or more required elements not found.');
-  alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
+console.error('One or more required elements not found.');
+alert('There was an issue finding one or more required elements. Please refresh the page and try again.');
 }
