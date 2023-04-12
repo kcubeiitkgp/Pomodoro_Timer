@@ -5,6 +5,24 @@ body {
   padding: 0;
 }
 
+.current-time {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.current-time .time,
+.current-time .date,
+.current-time .day {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.current-time .day {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
 .timer-container {
   align-items: center;
   display: flex;
