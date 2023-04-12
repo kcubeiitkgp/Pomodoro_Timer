@@ -36,25 +36,26 @@ function displayTimeLeft(seconds) {
   const minutes = Math.floor(seconds / 60);
   const remainderSeconds = seconds % 60;
   const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
-  timeLeft.textContent = display;
-  document.title = display;
+  timeLeft.textContent = `Focus Mode: ${display}`;
+  document.title = `Focus Mode: ${display}`;
 }
 
 function updateUI() {
   if (isBreak) {
-    timeLeft.textContent = "5:00";
-    document.title = "Break Time!";
+    timeLeft.textContent = "Break Mode: 5:00";
+    document.title = "Break Mode: 5:00";
     heading.textContent = "Break";
     timerContainer.classList.add("is-break-time");
     startButton.textContent = "Start";
   } else {
-    timeLeft.textContent = "25:00";
-    document.title = "Pomodoro Timer";
+    timeLeft.textContent = "Focus Mode: 25:00";
+    document.title = "Focus Mode: 25:00";
     heading.textContent = "Focus";
     timerContainer.classList.remove("is-break-time");
     startButton.textContent = "Start";
   }
 }
+
 
 function startOrReset() {
   if (startButton.textContent === "Start") {
